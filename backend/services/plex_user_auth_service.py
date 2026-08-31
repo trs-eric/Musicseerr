@@ -5,8 +5,7 @@ from __future__ import annotations
 import json, logging, uuid
 
 from plex_api_client import PlexAPI
-from plex_api_client.models.operations.get_server_resources import GetServerResourcesRequest
-from plex_api_client.models.operations.gettokendetails import GetTokenDetailsRequest
+from plex_api_client.models import operations
 
 from core.exceptions import AuthenticationError, PlexApiError
 from infrastructure.crypto import encrypt
@@ -85,7 +84,7 @@ class PlexUserAuthService:
         )
         try:
             resp = await plex.authentication.get_token_details_async(
-                request = GetTokenDetailsRequest(client_identifier = client_id)
+                request = operations.GetTokenDetailsRequest(client_identifier = client_id)
             )
         except Exception as e:  # noqa: BLE001
             logger.error(f"Failed to fetch Plex user profile: {e}")
@@ -112,7 +111,7 @@ class PlexUserAuthService:
         )
         try:
             resp = await plex.plex.get_server_resources_async(
-                request = GetServerResourcesRequest(
+                request = operations.GetServerResourcesRequest(
                     client_identifier = client_id,
                     include_https = 1,
                     include_relay = 1,

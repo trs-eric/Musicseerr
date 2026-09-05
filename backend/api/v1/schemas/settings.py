@@ -242,7 +242,7 @@ class PrimaryMusicSourceSettings(AppStruct):
 
 
 _OFFICIAL_MB_RATE_LIMIT = 1.0
-_OFFICIAL_MB_CONCURRENT_SEARCHES = 6
+_OFFICIAL_MB_CONCURRENT_SEARCHES = 1
 
 
 def is_official_musicbrainz(url: str) -> bool:
@@ -272,7 +272,7 @@ class SecuritySettings(AppStruct):
 class MusicBrainzConnectionSettings(AppStruct):
     api_url: str = "https://musicbrainz.org/ws/2"
     rate_limit: float = 1.0
-    concurrent_searches: int = 6
+    concurrent_searches: int = 1
 
     def __post_init__(self) -> None:
         self.api_url = self.api_url.strip()

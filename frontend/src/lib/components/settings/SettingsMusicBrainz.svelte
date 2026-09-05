@@ -23,7 +23,7 @@
 		defaultValue: {
 			api_url: 'https://musicbrainz.org/ws/2',
 			rate_limit: 1.0,
-			concurrent_searches: 6
+			concurrent_searches: 1
 		}
 	}) as MusicBrainzSettingsForm;
 
@@ -43,7 +43,7 @@
 		if (form.data) {
 			form.data.api_url = 'https://musicbrainz.org/ws/2';
 			form.data.rate_limit = 1.0;
-			form.data.concurrent_searches = 6;
+			form.data.concurrent_searches = 1;
 			form.testResult = null;
 		}
 	}
@@ -66,7 +66,7 @@
 	$effect(() => {
 		if (isOfficialApi && form.data) {
 			if (form.data.rate_limit > 1.0) form.data.rate_limit = 1.0;
-			if (form.data.concurrent_searches > 6) form.data.concurrent_searches = 6;
+			if (form.data.concurrent_searches > 1) form.data.concurrent_searches = 1;
 		}
 	});
 
@@ -158,12 +158,12 @@
 							id="mb-concurrent"
 							type="number"
 							min="1"
-							max={isOfficialApi ? 6 : 30}
+							max={isOfficialApi ? 1 : 30}
 							bind:value={form.data.concurrent_searches}
 							class="input w-full"
 						/>
 						<p class="text-xs text-base-content/50 mt-1 ml-1">
-							Burst capacity for parallel API requests (default: 6).
+							Burst capacity for parallel API requests (default: 1).
 						</p>
 					</div>
 				</div>

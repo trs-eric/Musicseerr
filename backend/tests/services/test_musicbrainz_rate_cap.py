@@ -77,10 +77,10 @@ class TestMusicBrainzSettingsClamping:
         settings = MusicBrainzConnectionSettings(
             api_url="https://musicbrainz.org/ws/2",
             rate_limit=0.5,
-            concurrent_searches=3,
+            concurrent_searches=1,
         )
         assert settings.rate_limit == 0.5
-        assert settings.concurrent_searches == 3
+        assert settings.concurrent_searches == 1
 
     def test_custom_url_allows_high_rate_limit(self):
         settings = MusicBrainzConnectionSettings(
@@ -94,7 +94,7 @@ class TestMusicBrainzSettingsClamping:
     def test_defaults_unchanged(self):
         settings = MusicBrainzConnectionSettings()
         assert settings.rate_limit == 1.0
-        assert settings.concurrent_searches == 6
+        assert settings.concurrent_searches == 1
         assert settings.api_url == "https://musicbrainz.org/ws/2"
 
 

@@ -36,7 +36,7 @@ from infrastructure.cache.cache_keys import (
     home_prefixes,
 )
 from infrastructure.cache.memory_cache import InMemoryCache, CacheInterface
-from infrastructure.http.client import get_http_client
+from infrastructure.http.client import get_http_client, get_musicbrainz_http_client
 from repositories.jellyfin_models import JellyfinUser
 
 logger = logging.getLogger(__name__)
@@ -748,7 +748,7 @@ class SettingsService:
             mb_circuit_breaker.reset()
 
             app_settings = get_settings()
-            client = get_http_client(app_settings)
+            client = get_musicbrainz_http_client(app_settings)
             response = await client.get(
                 f"{settings.api_url.rstrip('/')}/artist",
                 params={"query": "test", "fmt": "json", "limit": 1},

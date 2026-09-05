@@ -85,3 +85,22 @@ def get_listenbrainz_http_client(
         settings=settings,
         http2=False,
     )
+
+
+def get_musicbrainz_http_client(
+    settings: Optional[Settings] = None,
+    timeout: Optional[float] = None,
+    connect_timeout: Optional[float] = None,
+    max_connections: Optional[int] = None,
+) -> httpx.AsyncClient:
+    if settings is None:
+        settings = get_settings()
+    return HttpClientFactory.get_client(
+        name="musicbrainz",
+        timeout=timeout or settings.http_timeout,
+        connect_timeout=connect_timeout or settings.http_connect_timeout,
+        max_connections=max_connections or settings.http_max_connections,
+        max_keepalive=settings.http_max_keepalive,
+        settings=settings,
+        http2=True,
+    )

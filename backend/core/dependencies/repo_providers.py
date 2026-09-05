@@ -7,7 +7,11 @@ import logging
 import httpx
 
 from core.config import get_settings
-from infrastructure.http.client import get_http_client, get_listenbrainz_http_client
+from infrastructure.http.client import (
+    get_http_client,
+    get_listenbrainz_http_client,
+    get_musicbrainz_http_client,
+)
 
 from ._registry import singleton
 from .cache_providers import (
@@ -48,7 +52,13 @@ def get_musicbrainz_repository() -> "MusicBrainzRepository":
 
     cache = get_cache()
     preferences_service = get_preferences_service()
-    http_client = _get_configured_http_client()
+    advanced = preferences_service.get_advanced_settings()
+    http_client = get_musicbrainz_http_client(
+        settings=get_settings(),
+        timeout=float(advanced.http_timeout),
+        connect_timeout=float(advanced.http_connect_timeout),
+        max_connections=advanced.http_max_connections,
+    )
     return MusicBrainzRepository(http_client, cache, preferences_service)
 
 
